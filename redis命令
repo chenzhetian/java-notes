@@ -1,0 +1,51 @@
+redis支持的数据结构：
+string、hash、list、set、sorted set
+
+key(键)
+del	删除key
+dump	序列化给定key
+restore	反序列化(RESTORE key ttl serialized-value)参数 ttl 以毫秒为单位为 key 设置生存时间；如果 ttl 为 0 ，那么不设置生存时间。
+exists	是否存在某个key
+expire	给指定key设置生存时间(秒) expire key seconds
+pexpire	给指定key设置生存时间(毫秒) expire key milliseconds
+expireat	设置生存空间(秒时间戳)	expireat key seconds-timestamp
+pexpireat	设置生存空间(毫秒时间戳)
+ttl	查看剩余生存时间(秒)
+pttl	查看剩余生存时间(毫秒)
+keys	查找所有符合给定模式的key(keys *aab*/t??/t[abc]*)
+migrate	当前实例传送到目标实例的指定数据库上，一旦传送成功， key 保证会出现在目标实例上，而当前实例上的 key 会被删除。
+		两个redis实例相互迁移
+		(MIGRATE host port key destination-db timeout [COPY] [REPLACE]  例：MIGRATE 
+move	将当前数据库的key移动到给定的数据库db中
+object	命令允许从内部查看给定key的redis对象
+		REFCOUNT(存储值的次数) 和 IDLETIME(空转时间，idle没有被读取也没有被写入，以秒为单位) 返回数字。
+		ENCODING 返回相应的编码类型。
+persist	移除给定key的生存空间(persist key)
+randomkey	从当前数据库返回随机一个key
+rename	将key改名为newkey，存在时也可以，会直接覆盖(RENAME key newkey)
+RENAMENX	当且仅当 newkey 不存在时，将 key 改名为 newkey 。
+sort	返回或保存给定列表、集合、有序集合 key 中经过排序的元素。
+		(SORT key [BY pattern] [LIMIT offset count] [GET pattern [GET pattern ...]] [ASC | DESC] [ALPHA] [STORE destination])
+type	返回key存储的值的类型(type key)
+scan	暂时没理解(SCAN cursor [MATCH pattern] [COUNT count])
+
+string(字符串)
+append	存在加在后面，不存在相当于set(append key value)
+getrange	返回 key 中字符串值的子字符串，字符串的截取范围由 start ~ end 两个偏移量决定(GETRANGE key start end)
+bitcount	计算给定字符串中，被设置为1的比特位的数量。可以用来实现用户上限次数统计，占用空间小
+getbit	对 key 所储存的字符串值，获取指定偏移量上的位(bit)。(GETBIT key offset)
+setbit	对 key 所储存的字符串值，设置或清除指定偏移量上的位(bit)。(SETBIT key offset value)
+bitop	对一个或多个保存二进制位的字符串 key 进行位元操作，并将结果保存到 destkey 上。bitop之前事先进行setbit
+		4个运算符：
+		BITOP AND destkey key [key ...] ，对一个或多个 key 求逻辑并，并将结果保存到 destkey 。
+		BITOP OR destkey key [key ...] ，对一个或多个 key 求逻辑或，并将结果保存到 destkey 。
+		BITOP XOR destkey key [key ...] ，对一个或多个 key 求逻辑异或，并将结果保存到 destkey 。
+		BITOP NOT destkey key ，对给定 key 求逻辑非，并将结果保存到 destkey 。
+decr	将key中存储的数字值减一	，不是数字就会报错	
+decrby	将key存储的值减去减量decrement(DECRBY key decrement)
+incr	将key中存储的数字值加一	，不是数字就会报错			
+incrby	将key存储的值加上增量increment(INCRBY key increment)
+
+
+事务
+watch	WATCH key [key ...] 监视一个或多个key，如果被其他命令所改动，那么事务中断
