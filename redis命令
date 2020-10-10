@@ -45,7 +45,15 @@ decr	将key中存储的数字值减一	，不是数字就会报错
 decrby	将key存储的值减去减量decrement(DECRBY key decrement)
 incr	将key中存储的数字值加一	，不是数字就会报错			
 incrby	将key存储的值加上增量increment(INCRBY key increment)
-
+incrbyfloat	加上浮点数增量
+getset	将给定key的值设为value，并返回key的旧值(getset key value)
+get	只能处理字符串值，并且key只有一个
+mget	可以返回一个或多个给定的key值(MGET key [key ...])
+mset	同时设置一个或多个key-value对，会覆盖原值(MSET key value [key value ...])
+msetnx	同时设置一个或多个 key-value 对，当且仅当所有给定 key 都不存在。与mset相对
+setex	将值value关联到key，并将key的生存时间设为seconds，比expire多了一步赋值(SETEX key seconds value)
+psetex	与setex相似，生存时间为毫秒
+set	将value关联到key上(SET key value [EX seconds] [PX milliseconds] [NX|XX])
 
 事务
 watch	WATCH key [key ...] 监视一个或多个key，如果被其他命令所改动，那么事务中断
