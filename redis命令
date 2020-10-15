@@ -52,8 +52,38 @@ mget	可以返回一个或多个给定的key值(MGET key [key ...])
 mset	同时设置一个或多个key-value对，会覆盖原值(MSET key value [key value ...])
 msetnx	同时设置一个或多个 key-value 对，当且仅当所有给定 key 都不存在。与mset相对
 setex	将值value关联到key，并将key的生存时间设为seconds，比expire多了一步赋值(SETEX key seconds value)
+setnx	将 key 的值设为 value ，当且仅当 key 不存在。 key 已经存在，则 SETNX 不做任何动作。(SETNX key value)
 psetex	与setex相似，生存时间为毫秒
 set	将value关联到key上(SET key value [EX seconds] [PX milliseconds] [NX|XX])
+setrange	替换字符串,从偏移量 offset 开始,原字符和偏移量之间的空白将用零字节(zerobytes, "\x00" )来填充。(SETRANGE key offset value)
+strlen	返回key的字符串长度,当 key 不存在时，返回 0 。不是字符串值时，返回一个错误(STRLEN key)
+
+Hash(哈希表)
+hdel	删除哈希表 key 中的一个或多个指定域，不存在的域将被忽略。(HDEL key field [field ...])
+hexists	查看哈希表 key 中，给定域 field 是否存在。(HEXISTS key field)
+hget	获取key的域field的值，域或key不存在，返回nil。(HGET key field)
+hgetall	获取key的所有域和值，返回值的长度为哈希表大小的两倍，一行域，一行值(HGETALL key)
+hincrby	field值加上增量(HINCRBY key field increment)
+hincrbyfloat	加上浮点数增量(HINCRBYFLOAT key field increment)
+hkeys	返回哈希表 key 中的所有域。(HKEYS key)
+hvals	返回哈希表 key 中所有域的值。不存在返回空表。(HVALS key)
+hlen	返回key中域的数量(HLEN key)
+hset	只能设置一个域的value(HSET key field value)
+hmget	获取多个域的值,域不存在，那一行返回nil(HMGET key field [field ...])
+hmset	设置多个域的值(HMSET key field value [field value ...])
+hsetnx	域不存在时可设置，存在该操作无效(HSETNX key field value)
+
+List(列表)与上面两个有所不同了
+lpush	将一个或多个值 value 插入到列表 key 的表头,从左到右(LPUSH key value [value ...])
+rpush	将一个或多个值 value 插入到列表 key 的表尾(最右边)(RPUSH key value [value ...])
+blpop	弹出(弹出之后列表中的值就不存在了)存在值的列表，没列表一直被阻塞(BLPOP key [key ...] timeout
+		如果所有给定 key 都不存在或包含空列表，那么 BLPOP 命令将阻塞连接，直到等待超时，或有另一个客户端对给定 key 的任意一个执行 LPUSH 或 RPUSH 命令为止。
+		超时参数 timeout 接受一个以秒为单位的数字作为值。超时参数设为 0 表示阻塞时间可以无限期延长(block indefinitely) 。
+		取最左边的
+brpop	与blpop取的列表中元素的位置不同，r取最右边的
+brpoplpush	当给定列表 source 不为空时，当列表 source 为空时， BRPOPLPUSH 命令将阻塞连接，直到等待超时，或有另一个客户端对 source 执行 LPUSH 或 RPUSH 命令为止。 BRPOPLPUSH 的表现和 RPOPLPUSH 一样。(BRPOPLPUSH source destination timeout)
+lindex	从key中获取下标为index的元素，0为第一个，-1为最后一个，找不到返回nil(LINDEX key index)
+
 
 事务
 watch	WATCH key [key ...] 监视一个或多个key，如果被其他命令所改动，那么事务中断
