@@ -87,10 +87,19 @@ blpop	弹出(弹出之后列表中的值就不存在了)存在值的列表，没
 		取最左边的
 brpop	与blpop取的列表中元素的位置不同，r取最右边的
 brpoplpush	当给定列表 source 不为空时，当列表 source 为空时， BRPOPLPUSH 命令将阻塞连接，直到等待超时，或有另一个客户端对 source 执行 LPUSH 或 RPUSH 命令为止。 BRPOPLPUSH 的表现和 RPOPLPUSH 一样。(BRPOPLPUSH source destination timeout)
+rppoplpush	上同
 lindex	从key中获取下标为index的元素，0为第一个，-1为最后一个，找不到返回nil(LINDEX key index)
 linsert	将值 value 插入到列表 key 当中，位于值 pivot 之前或之后。key不存在返回0，没找到pivot返回-1，key不是列表类型报错(LINSERT key BEFORE|AFTER pivot value)
 lrange	获取列表key指定区域的元素，区间以偏移量 start 和 stop 指定，从0开始，-1表示最后一个，-2倒数第二个(LRANGE key start stop)
+lrem	根据count值，移除列表中与参数value相等的元素，count小于0，从表尾开始；等于0，删除所有与value相等的值；大于0，从表头开始(LREM key count value)
+lset	将列表key下标为index的元素的值设置为value，修改(lset key index value)
+ltrim	保留列表key第strat个到第stop个的元素，其他剔除，start=10000,stop=999会清空列表(ltrim key start stop)
 
+
+Set(集合)
+sadd	将一个或多个member元素加入到集合key当中，已经存在于集合(重复)的member元素将被忽略(sadd key member[member...])
+scard	返回集合中元素的个数(scard key)
+sdiff	通过这个获取集合key下的所有元素，也可以获取与其他key不同的元素,即差集(sdiff key[key...])
 
 事务
 watch	WATCH key [key ...] 监视一个或多个key，如果被其他命令所改动，那么事务中断
