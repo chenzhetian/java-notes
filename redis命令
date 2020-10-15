@@ -75,7 +75,12 @@ hsetnx	域不存在时可设置，存在该操作无效(HSETNX key field value)
 
 List(列表)与上面两个有所不同了
 lpush	将一个或多个值 value 插入到列表 key 的表头,从左到右(LPUSH key value [value ...])
+lpushx	从左插入，当key不存在，则不添加(LPUSHX key value)
 rpush	将一个或多个值 value 插入到列表 key 的表尾(最右边)(RPUSH key value [value ...])
+rpushx	从右插入，当key不存在，则不添加(RPUSHX key value)
+llen	返回key列表的长度(LLEN key)
+lpop	移除并返回列表key的头元素(LPOP key)
+rpop	移除并返回列表 key 的尾元素。(RPOP key)
 blpop	弹出(弹出之后列表中的值就不存在了)存在值的列表，没列表一直被阻塞(BLPOP key [key ...] timeout
 		如果所有给定 key 都不存在或包含空列表，那么 BLPOP 命令将阻塞连接，直到等待超时，或有另一个客户端对给定 key 的任意一个执行 LPUSH 或 RPUSH 命令为止。
 		超时参数 timeout 接受一个以秒为单位的数字作为值。超时参数设为 0 表示阻塞时间可以无限期延长(block indefinitely) 。
@@ -83,6 +88,8 @@ blpop	弹出(弹出之后列表中的值就不存在了)存在值的列表，没
 brpop	与blpop取的列表中元素的位置不同，r取最右边的
 brpoplpush	当给定列表 source 不为空时，当列表 source 为空时， BRPOPLPUSH 命令将阻塞连接，直到等待超时，或有另一个客户端对 source 执行 LPUSH 或 RPUSH 命令为止。 BRPOPLPUSH 的表现和 RPOPLPUSH 一样。(BRPOPLPUSH source destination timeout)
 lindex	从key中获取下标为index的元素，0为第一个，-1为最后一个，找不到返回nil(LINDEX key index)
+linsert	将值 value 插入到列表 key 当中，位于值 pivot 之前或之后。key不存在返回0，没找到pivot返回-1，key不是列表类型报错(LINSERT key BEFORE|AFTER pivot value)
+lrange	获取列表key指定区域的元素，区间以偏移量 start 和 stop 指定，从0开始，-1表示最后一个，-2倒数第二个(LRANGE key start stop)
 
 
 事务
